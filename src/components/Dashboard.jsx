@@ -11,7 +11,7 @@ import {
   serverTimestamp
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { showError, showToast, showWarning } from '../utils/sweetAlert';
+import { showError, showToast, showWarning, showSuccess } from '../utils/sweetAlert';
 import ProfileCompletion from './ProfileCompletion';
 import './Dashboard.css';
 
@@ -22,10 +22,54 @@ const Dashboard = () => {
   const [newReferral, setNewReferral] = useState({ name: '', phone: '' });
   const [loading, setLoading] = useState(false);
   const [loadingReferrals, setLoadingReferrals] = useState(true);
+  const [hasWon, setHasWon] = useState(false);
+  const [winnerInfo, setWinnerInfo] = useState(null);
 
   useEffect(() => {
     document.title = 'Dashboard - Sorteio ANIMON 2025 | Proz';
   }, []);
+
+  const checkWinnerStatus = async () => {
+    if (!currentUser) return;
+    
+    try {
+      const drawsQuery = query(
+        collection(db, 'draws'),
+        orderBy('createdAt', 'desc')
+      );
+      
+      const snapshot = await getDocs(drawsQuery);
+      let foundWin = false;
+      let winInfo = null;
+      
+      snapshot.docs.forEach(doc => {
+        const drawData = doc.data();
+        if (drawData.winners) {
+          const winner = drawData.winners.find(w => w.userId === currentUser.uid);
+          if (winner && !foundWin) {
+            foundWin = true;
+            winInfo = {
+              drawId: doc.id,
+              position: winner.drawPosition,
+              drawDate: drawData.createdAt?.toDate()
+            };
+          }
+        }
+      });
+      
+      if (foundWin && !hasWon) {
+        setHasWon(true);
+        setWinnerInfo(winInfo);
+        // Mostrar alerta de vitória
+        showSuccess(
+          '🎉 PARABÉNS! VOCÊ GANHOU!',
+          `Você foi sorteado na posição #${winInfo.position}!\n\nVenha até a escola Proz para retirar seu ingresso gratuito para o ANIMON 2025!\n\n📍 Compareça o quanto antes com um documento de identidade.`
+        );
+      }
+    } catch (error) {
+      console.error('Erro ao verificar status de ganhador:', error);
+    }
+  };
 
   const loadReferrals = async () => {
     if (!currentUser) return;
@@ -53,7 +97,38 @@ const Dashboard = () => {
 
   const validatePhone = (phone) => {
     const phoneRegex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
-    return phoneRegex.test(phone);
+    if (!phoneRegex.test(phone)) return false;
+    
+    // Extrair apenas os números do telefone
+    const numbers = phone.replace(/\D/g, '');
+    
+    // Verificar se não são todos números iguais
+    const firstDigit = numbers[0];
+    const allSameDigits = numbers.split('').every(digit => digit === firstDigit);
+    if (allSameDigits) return false;
+    
+    // Verificar padrões suspeitos comuns
+    const suspiciousPatterns = [
+      '00000000000',
+      '11111111111',
+      '22222222222',
+      '33333333333',
+      '44444444444',
+      '55555555555',
+      '66666666666',
+      '77777777777',
+      '88888888888',
+      '99999999999',
+      '12345678901',
+      '01234567890'
+    ];
+    
+    if (suspiciousPatterns.includes(numbers)) return false;
+    
+    // Verificar se tem pelo menos 10 dígitos únicos (DDD + número)
+    if (numbers.length < 10) return false;
+    
+    return true;
   };
 
   const formatPhone = (value) => {
@@ -121,6 +196,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (currentUser && userProfile) {
       loadReferrals();
+      checkWinnerStatus();
     }
   }, [currentUser, userProfile]);
 

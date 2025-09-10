@@ -11,7 +11,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useAuth } from '../contexts/AuthContext';
-import { showError, showToast, showWarning, showInfo } from '../utils/sweetAlert';
+import { showError, showToast, showWarning, showInfo, showConfirm } from '../utils/sweetAlert';
 import AdminDraw from './AdminDraw';
 import './AdminPanel.css';
 
@@ -99,6 +99,43 @@ const AdminPanel = () => {
     }
   };
 
+  const toggleUserValidity = async (userId, userName, currentValidity) => {
+    const result = await showConfirm(
+      'Alterar status do usuário',
+      `Deseja ${currentValidity === false ? 'reativar' : 'invalidar'} o usuário ${userName}?`,
+      'Confirmar'
+    );
+
+    if (!result.isConfirmed) return;
+
+    try {
+      const newStatus = currentValidity === false ? true : false;
+      
+      await updateDoc(doc(db, 'users', userId), {
+        isValid: newStatus
+      });
+      
+      setUsers(prev => 
+        prev.map(user => 
+          user.id === userId 
+            ? { ...user, isValid: newStatus }
+            : user
+        )
+      );
+      
+      showToast(
+        `${newStatus ? '✅' : '❌'} ${userName} ${newStatus ? 'reativado' : 'invalidado'}`, 
+        'success'
+      );
+    } catch (error) {
+      console.error('Erro ao alterar status:', error);
+      showError(
+        'Erro na operação',
+        'Não foi possível alterar o status do usuário.'
+      );
+    }
+  };
+
   const toggleAdminStatus = async (userEmail, userName, isCurrentlyAdmin) => {
     try {
       if (userEmail === 'durvaldomarques@gmail.com') {
@@ -157,6 +194,13 @@ const AdminPanel = () => {
   const isUserAdmin = (email) => {
     return email === 'durvaldomarques@gmail.com' || 
            admins.some(admin => admin.email === email);
+  };
+
+  const openWhatsApp = (phone) => {
+    // Remover formatação e adicionar código do Brasil
+    const cleanPhone = phone.replace(/\D/g, '');
+    const whatsappUrl = `https://wa.me/55${cleanPhone}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   useEffect(() => {
@@ -244,13 +288,17 @@ const AdminPanel = () => {
                   const validReferrals = getValidReferralsCount(user.id);
                   const isAdmin = isUserAdmin(user.email);
                   
+                  const isInvalidUser = user.isValid === false;
+                  
                   return (
-                    <div key={user.id} className={`user-card ${isAdmin ? 'admin-user' : ''}`}>
+                    <div key={user.id} className={`user-card ${isAdmin ? 'admin-user' : ''} ${isInvalidUser ? 'invalid-user' : ''}`}>
                       <div className="user-info">
                         <h3>{user.fullName || 'Nome não informado'}</h3>
                         <p className="email">{user.email}</p>
                         <p className="phone">{user.phone || 'Telefone não informado'}</p>
                         <p className="teacher">Prof: {user.teacher || 'Não informado'}</p>
+                        <p className="turno">Turno: {user.turno || 'Não informado'}</p>
+                        <p className="curso">Curso: {user.curso || 'Não informado'}</p>
                       </div>
                       
                       <div className="user-stats">
@@ -269,6 +317,12 @@ const AdminPanel = () => {
                       </div>
 
                       <div className="user-actions">
+                        <button
+                          onClick={() => toggleUserValidity(user.id, user.fullName, user.isValid)}
+                          className={`validity-toggle-btn ${isInvalidUser ? 'activate-user' : 'invalidate-user'}`}
+                        >
+                          {isInvalidUser ? '✅ Reativar' : '❌ Invalidar'}
+                        </button>
                         <button
                           onClick={() => toggleAdminStatus(user.email, user.fullName, isAdmin)}
                           className={`admin-toggle-btn ${isAdmin ? 'remove-admin' : 'make-admin'}`}
@@ -317,7 +371,16 @@ const AdminPanel = () => {
                       <small>{referral.userEmail}</small>
                     </div>
                     <div>{referral.friendName}</div>
-                    <div className="phone-cell">{referral.friendPhone}</div>
+                    <div className="phone-cell">
+                      {referral.friendPhone}
+                      <button
+                        onClick={() => openWhatsApp(referral.friendPhone)}
+                        className="whatsapp-btn"
+                        title="Abrir no WhatsApp"
+                      >
+                        📱
+                      </button>
+                    </div>
                     <div className="date-cell">
                       {referral.createdAt?.toDate().toLocaleDateString('pt-BR')}
                     </div>

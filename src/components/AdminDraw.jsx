@@ -36,10 +36,22 @@ const AdminDraw = ({ users, referrals, onRefresh }) => {
     }
   };
 
+  const isUserAdmin = (email) => {
+    return email === 'durvaldomarques@gmail.com' || 
+           // Verificar se é admin na lista de admins (se houver acesso)
+           false; // Por enquanto, apenas o admin principal
+  };
+
   const createDrawPool = () => {
     const pool = [];
     
-    users.forEach(user => {
+    // Filtrar usuários: excluir admins e inválidos
+    const eligibleUsers = users.filter(user => 
+      !isUserAdmin(user.email) && // Excluir administradores
+      user.isValid !== false     // Excluir usuários inválidos
+    );
+    
+    eligibleUsers.forEach(user => {
       const userValidReferrals = referrals.filter(
         ref => ref.userId === user.id && ref.isValid === true
       );
@@ -105,19 +117,13 @@ const AdminDraw = ({ users, referrals, onRefresh }) => {
         }
       }
       
+      // Garantir que cada usuário só pode ganhar um ingresso (sem repetições)
       if (winners.length < 16) {
-        // Se não conseguimos 16 usuários únicos, permitir repetições
-        const remainingSlots = 16 - winners.length;
-        const availableTickets = shuffledPool.filter(
-          ticket => !selectedUserIds.has(ticket.userId)
+        showWarning(
+          'Usuários insuficientes!',
+          `Apenas ${winners.length} usuários únicos disponíveis. Não é possível sortear 16 ingressos sem repetir ganhadores.`
         );
-        
-        for (let i = 0; i < remainingSlots && i < availableTickets.length; i++) {
-          winners.push({
-            ...availableTickets[i],
-            drawPosition: winners.length + 1
-          });
-        }
+        return;
       }
       
       // Salvar resultado no Firebase
