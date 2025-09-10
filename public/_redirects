@@ -1,0 +1,18 @@
+# Netlify redirects for SPA (React Router)
+# This file handles client-side routing for the React app
+
+# Redirect all routes to index.html for client-side routing
+/*    /index.html   200
+
+# Optional: Redirect root domain to www (uncomment if needed)
+# https://animon-proz.netlify.app/*  https://www.animon-proz.netlify.app/:splat  301!
+
+# API routes (if you have any backend endpoints, add them here)
+# /api/*  https://your-backend-api.com/api/:splat  200
+
+# Security headers
+/*
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

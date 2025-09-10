@@ -72,9 +72,16 @@ const Dashboard = () => {
   };
 
   const loadReferrals = async () => {
-    if (!currentUser) return;
+    if (!currentUser) {
+      console.log('❌ Dashboard: currentUser não existe');
+      return;
+    }
+    
+    console.log('🔍 Dashboard: Carregando indicações para userId:', currentUser.uid);
+    console.log('🔍 Dashboard: Email do usuário:', currentUser.email);
     
     try {
+      // Primeira tentativa: buscar por userId
       const referralsQuery = query(
         collection(db, 'referrals'),
         where('userId', '==', currentUser.uid),
@@ -82,14 +89,39 @@ const Dashboard = () => {
       );
       
       const snapshot = await getDocs(referralsQuery);
-      const referralsList = snapshot.docs.map(doc => ({
+      let referralsList = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       }));
       
+      console.log('📊 Dashboard: Indicações encontradas por userId:', referralsList.length);
+      
+      // Se não encontrou por userId, tentar por userEmail (fallback para dados antigos)
+      if (referralsList.length === 0) {
+        console.log('🔄 Dashboard: Tentando buscar por userEmail...');
+        const emailQuery = query(
+          collection(db, 'referrals'),
+          where('userEmail', '==', currentUser.email),
+          orderBy('createdAt', 'desc')
+        );
+        
+        const emailSnapshot = await getDocs(emailQuery);
+        referralsList = emailSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        
+        console.log('📊 Dashboard: Indicações encontradas por email:', referralsList.length);
+      }
+      
+      if (referralsList.length > 0) {
+        console.log('✅ Dashboard: Primeira indicação:', referralsList[0]);
+      }
+      
       setReferrals(referralsList);
     } catch (error) {
-      console.error('Erro ao carregar indicações:', error);
+      console.error('❌ Dashboard: Erro ao carregar indicações:', error);
+      console.error('❌ Dashboard: Detalhes do erro:', error.message);
     } finally {
       setLoadingReferrals(false);
     }
@@ -146,6 +178,21 @@ const Dashboard = () => {
     setNewReferral(prev => ({ ...prev, phone: formatted }));
   };
 
+  const checkDuplicatePhone = async (phone) => {
+    try {
+      const phoneQuery = query(
+        collection(db, 'referrals'),
+        where('friendPhone', '==', phone)
+      );
+      
+      const snapshot = await getDocs(phoneQuery);
+      return !snapshot.empty;
+    } catch (error) {
+      console.error('Erro ao verificar duplicação:', error);
+      return false;
+    }
+  };
+
   const addReferral = async (e) => {
     e.preventDefault();
     
@@ -161,6 +208,16 @@ const Dashboard = () => {
       showWarning(
         'Telefone inválido!',
         'Por favor, insira um telefone válido no formato (XX) XXXXX-XXXX'
+      );
+      return;
+    }
+
+    // Verificar se o número já foi indicado
+    const isDuplicate = await checkDuplicatePhone(newReferral.phone);
+    if (isDuplicate) {
+      showWarning(
+        'Número já indicado!',
+        'Esse número já foi indicado para o sorteio. Cada número só pode participar uma vez.'
       );
       return;
     }
@@ -227,16 +284,6 @@ const Dashboard = () => {
           <div className="user-section">
             <div className="user-details">
               <span className="welcome-text">Olá, {userProfile.fullName}!</span>
-              <span className="user-email">{currentUser.email}</span>
-              {userProfile.teacher && (
-                <span className="user-teacher">Professor: {userProfile.teacher}</span>
-              )}
-              {userProfile.turno && (
-                <span className="user-turno">Turno: {userProfile.turno}</span>
-              )}
-              {userProfile.curso && (
-                <span className="user-curso">Curso: {userProfile.curso}</span>
-              )}
             </div>
             <div className="header-actions">
               {isAdmin && (
