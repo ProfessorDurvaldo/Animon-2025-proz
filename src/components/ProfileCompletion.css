@@ -149,6 +149,31 @@
   color: #bbb;
 }
 
+/* Styling específico para selects */
+select.form-input {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+select.form-input option {
+  background: #1a1a3a !important;
+  color: #fff !important;
+  padding: 8px 12px;
+  font-weight: 500;
+}
+
+select.form-input option:hover,
+select.form-input option:focus {
+  background: #4ecdc4 !important;
+  color: #000 !important;
+}
+
+select.form-input:focus {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
 .form-help {
   color: #bbb;
   font-size: 0.9rem;
