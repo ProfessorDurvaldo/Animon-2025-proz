@@ -11,6 +11,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useAuth } from '../contexts/AuthContext';
+import { showError, showToast, showWarning, showInfo } from '../utils/sweetAlert';
 import AdminDraw from './AdminDraw';
 import './AdminPanel.css';
 
@@ -61,7 +62,10 @@ const AdminPanel = () => {
 
     } catch (error) {
       console.error('Erro ao carregar dados:', error);
-      alert('Erro ao carregar dados do painel');
+      showError(
+        'Erro no carregamento',
+        'Não foi possível carregar os dados do painel administrativo.'
+      );
     } finally {
       setLoading(false);
     }
@@ -83,10 +87,13 @@ const AdminPanel = () => {
         )
       );
       
-      alert(`Indicação marcada como ${!currentStatus ? 'válida' : 'inválida'}!`);
+      showToast(`✅ Indicação marcada como ${!currentStatus ? 'válida' : 'inválida'}`, 'success');
     } catch (error) {
       console.error('Erro ao atualizar indicação:', error);
-      alert('Erro ao atualizar indicação');
+      showError(
+        'Erro na atualização',
+        'Não foi possível atualizar o status da indicação.'
+      );
     } finally {
       setActionLoading(prev => ({ ...prev, [referralId]: false }));
     }
@@ -95,7 +102,10 @@ const AdminPanel = () => {
   const toggleAdminStatus = async (userEmail, userName, isCurrentlyAdmin) => {
     try {
       if (userEmail === 'durvaldomarques@gmail.com') {
-        alert('Não é possível alterar o status do administrador principal');
+        showWarning(
+          'Operação não permitida!',
+          'Não é possível alterar o status do administrador principal.'
+        );
         return;
       }
 
@@ -105,7 +115,7 @@ const AdminPanel = () => {
         // Remover admin
         await deleteDoc(doc(db, 'admins', adminDoc.id));
         setAdmins(prev => prev.filter(admin => admin.id !== adminDoc.id));
-        alert(`${userName} removido dos administradores`);
+        showToast(`🗑️ ${userName} removido dos administradores`, 'success');
       } else if (!isCurrentlyAdmin) {
         // Adicionar admin
         const newAdminRef = doc(collection(db, 'admins'));
@@ -125,11 +135,14 @@ const AdminPanel = () => {
         };
         
         setAdmins(prev => [...prev, newAdmin]);
-        alert(`${userName} promovido a administrador`);
+        showToast(`⭐ ${userName} promovido a administrador`, 'success');
       }
     } catch (error) {
       console.error('Erro ao alterar status de admin:', error);
-      alert('Erro ao alterar status de administrador');
+      showError(
+        'Erro na operação',
+        'Não foi possível alterar o status de administrador.'
+      );
     }
   };
 
@@ -166,7 +179,6 @@ const AdminPanel = () => {
         <div className="header-content">
           <div className="header-info">
             <h1>🛡️ Painel Administrativo - ANIMON 2025</h1>
-            <p className="event-info">Gerenciamento do Sorteio • 13 e 14 de setembro</p>
           </div>
           <div className="admin-section">
             <div className="admin-details">

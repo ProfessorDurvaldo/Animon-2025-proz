@@ -8,6 +8,7 @@ import {
   serverTimestamp 
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { showError, showSuccess, showWarning } from '../utils/sweetAlert';
 import './AdminDraw.css';
 
 const AdminDraw = ({ users, referrals, onRefresh }) => {
@@ -78,7 +79,10 @@ const AdminDraw = ({ users, referrals, onRefresh }) => {
       const pool = createDrawPool();
       
       if (pool.length < 16) {
-        alert(`Não há indicações válidas suficientes. Total: ${pool.length}, Necessário: 16`);
+        showWarning(
+          'Indicações insuficientes!',
+          `Não há indicações válidas suficientes. Total: ${pool.length}, Necessário: 16`
+        );
         return;
       }
       
@@ -130,11 +134,17 @@ const AdminDraw = ({ users, referrals, onRefresh }) => {
       setDrawResults(winners);
       await loadDrawHistory();
       
-      alert(`Sorteio realizado com sucesso! ${winners.length} ganhadores selecionados.`);
+      showSuccess(
+        '🏆 Sorteio realizado!',
+        `${winners.length} ganhadores foram selecionados com sucesso.`
+      );
       
     } catch (error) {
       console.error('Erro no sorteio:', error);
-      alert('Erro ao realizar sorteio. Tente novamente.');
+      showError(
+        'Erro no sorteio',
+        'Não foi possível realizar o sorteio. Tente novamente.'
+      );
     } finally {
       setLoading(false);
     }

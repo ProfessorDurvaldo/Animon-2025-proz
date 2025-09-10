@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { serverTimestamp } from 'firebase/firestore';
+import { showError, showToast, showWarning } from '../utils/sweetAlert';
 import './ProfileCompletion.css';
 
 const ProfileCompletion = () => {
@@ -8,7 +9,9 @@ const ProfileCompletion = () => {
   const [formData, setFormData] = useState({
     fullName: currentUser?.displayName || '',
     phone: '',
-    teacher: ''
+    teacher: '',
+    turno: '',
+    curso: ''
   });
   const [loading, setLoading] = useState(false);
 
@@ -35,13 +38,19 @@ const ProfileCompletion = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!formData.fullName.trim() || !formData.phone.trim() || !formData.teacher.trim()) {
-      alert('Por favor, preencha todos os campos.');
+    if (!formData.fullName.trim() || !formData.phone.trim() || !formData.teacher.trim() || !formData.turno || !formData.curso) {
+      showWarning(
+        'Campos obrigatórios!',
+        'Por favor, preencha todos os campos para continuar.'
+      );
       return;
     }
 
     if (!validatePhone(formData.phone)) {
-      alert('Por favor, insira um telefone válido no formato (XX) XXXXX-XXXX');
+      showWarning(
+        'Telefone inválido!',
+        'Por favor, insira um telefone válido no formato (XX) XXXXX-XXXX'
+      );
       return;
     }
 
@@ -52,6 +61,8 @@ const ProfileCompletion = () => {
         fullName: formData.fullName.trim(),
         phone: formData.phone,
         teacher: formData.teacher.trim(),
+        turno: formData.turno,
+        curso: formData.curso,
         email: currentUser.email,
         profileCompletedAt: serverTimestamp(),
         lastUpdated: serverTimestamp()
@@ -60,13 +71,19 @@ const ProfileCompletion = () => {
       const success = await updateUserProfile(currentUser.uid, profileData);
       
       if (success) {
-        alert('Perfil completado com sucesso! Agora você pode indicar amigos. 🎉');
+        showToast('🎉 Perfil completado com sucesso!', 'success');
       } else {
-        alert('Erro ao salvar perfil. Tente novamente.');
+        showError(
+          'Erro ao salvar',
+          'Não foi possível salvar o perfil. Tente novamente.'
+        );
       }
     } catch (error) {
       console.error('Erro ao completar perfil:', error);
-      alert('Erro ao completar perfil. Tente novamente.');
+      showError(
+        'Erro no cadastro',
+        'Ocorreu um erro ao completar o perfil. Tente novamente.'
+      );
     } finally {
       setLoading(false);
     }
@@ -142,6 +159,42 @@ const ProfileCompletion = () => {
                 />
               </div>
 
+              <div className="form-group">
+                <label htmlFor="turno">Turno *</label>
+                <select
+                  id="turno"
+                  value={formData.turno}
+                  onChange={(e) => setFormData(prev => ({ ...prev, turno: e.target.value }))}
+                  required
+                  className="form-input"
+                >
+                  <option value="">Selecione seu turno</option>
+                  <option value="Manhã">Manhã</option>
+                  <option value="Tarde">Tarde</option>
+                  <option value="Noite">Noite</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="curso">Curso *</label>
+                <select
+                  id="curso"
+                  value={formData.curso}
+                  onChange={(e) => setFormData(prev => ({ ...prev, curso: e.target.value }))}
+                  required
+                  className="form-input"
+                >
+                  <option value="">Selecione seu curso</option>
+                  <option value="Enfermagem">Enfermagem</option>
+                  <option value="Administração">Administração</option>
+                  <option value="RH">RH</option>
+                  <option value="Desenvolvimento de sistema">Desenvolvimento de sistema</option>
+                  <option value="Estética">Estética</option>
+                  <option value="Radiologia">Radiologia</option>
+                  <option value="Segurança no trabalho">Segurança no trabalho</option>
+                </select>
+              </div>
+
               <div className="form-info">
                 <h3>📧 Email já cadastrado:</h3>
                 <p>{currentUser?.email}</p>
@@ -158,6 +211,8 @@ const ProfileCompletion = () => {
                 <li><strong>Nome Completo:</strong> Para identificação no sorteio</li>
                 <li><strong>Telefone:</strong> Para contato em caso de prêmio</li>
                 <li><strong>Professor:</strong> Para validar que você é aluno da Proz</li>
+                <li><strong>Turno:</strong> Para organização e estatísticas</li>
+                <li><strong>Curso:</strong> Para segmentação dos participantes</li>
               </ul>
             </div>
           </div>

@@ -11,6 +11,7 @@ import {
   serverTimestamp
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { showError, showToast, showWarning } from '../utils/sweetAlert';
 import ProfileCompletion from './ProfileCompletion';
 import './Dashboard.css';
 
@@ -74,12 +75,18 @@ const Dashboard = () => {
     e.preventDefault();
     
     if (!newReferral.name.trim() || !newReferral.phone.trim()) {
-      alert('Por favor, preencha todos os campos.');
+      showWarning(
+        'Campos obrigatórios!',
+        'Por favor, preencha todos os campos para continuar.'
+      );
       return;
     }
 
     if (!validatePhone(newReferral.phone)) {
-      alert('Por favor, insira um telefone válido no formato (XX) XXXXX-XXXX');
+      showWarning(
+        'Telefone inválido!',
+        'Por favor, insira um telefone válido no formato (XX) XXXXX-XXXX'
+      );
       return;
     }
 
@@ -99,10 +106,13 @@ const Dashboard = () => {
       setNewReferral({ name: '', phone: '' });
       await loadReferrals();
       
-      alert('Amigo adicionado com sucesso! 🎉');
+      showToast('🎉 Amigo adicionado com sucesso!', 'success');
     } catch (error) {
       console.error('Erro ao adicionar indicação:', error);
-      alert('Erro ao adicionar indicação. Tente novamente.');
+      showError(
+        'Erro na indicação',
+        'Não foi possível adicionar a indicação. Tente novamente.'
+      );
     } finally {
       setLoading(false);
     }
@@ -114,7 +124,17 @@ const Dashboard = () => {
     }
   }, [currentUser, userProfile]);
 
-  if (!userProfile || !userProfile.fullName) {
+  // Função para verificar se o perfil está completo
+  const isProfileComplete = (profile) => {
+    if (!profile) return false;
+    return profile.fullName && 
+           profile.phone && 
+           profile.teacher && 
+           profile.turno && 
+           profile.curso;
+  };
+
+  if (!isProfileComplete(userProfile)) {
     return <ProfileCompletion />;
   }
 
@@ -127,7 +147,6 @@ const Dashboard = () => {
         <div className="header-content">
           <div className="header-info">
             <h1>🎌 Dashboard - Sorteio ANIMON 2025</h1>
-            <p className="event-info">13 e 14 de setembro • Montes Claros - MG</p>
           </div>
           <div className="user-section">
             <div className="user-details">
@@ -135,6 +154,12 @@ const Dashboard = () => {
               <span className="user-email">{currentUser.email}</span>
               {userProfile.teacher && (
                 <span className="user-teacher">Professor: {userProfile.teacher}</span>
+              )}
+              {userProfile.turno && (
+                <span className="user-turno">Turno: {userProfile.turno}</span>
+              )}
+              {userProfile.curso && (
+                <span className="user-curso">Curso: {userProfile.curso}</span>
               )}
             </div>
             <div className="header-actions">

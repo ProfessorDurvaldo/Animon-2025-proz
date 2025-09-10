@@ -1,0 +1,238 @@
+/* SweetAlert2 Custom Theme - ANIMON 2025 Gray/Metallic */
+
+/* Base popup styling */
+.swal2-popup {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 50%, #1a1a2e 100%) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+  font-family: 'Roboto', sans-serif !important;
+}
+
+/* Title styling */
+.swal2-title {
+  color: #ffa726 !important;
+  font-family: 'Orbitron', monospace !important;
+  font-weight: 600 !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8) !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Content/HTML container */
+.swal2-html-container {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+}
+
+/* Success styling */
+.swal2-popup.swal2-icon-success {
+  border-left: 4px solid #4a9b8e !important;
+}
+
+.swal2-icon.swal2-success {
+  border-color: #4a9b8e !important;
+  color: #4a9b8e !important;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+  background-color: #4a9b8e !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+  border-color: rgba(74, 155, 142, 0.3) !important;
+}
+
+/* Error styling */
+.swal2-popup.swal2-icon-error {
+  border-left: 4px solid #a64d4d !important;
+}
+
+.swal2-icon.swal2-error {
+  border-color: #a64d4d !important;
+  color: #a64d4d !important;
+}
+
+.swal2-icon.swal2-error .swal2-x-mark {
+  border-color: #a64d4d !important;
+}
+
+/* Warning styling */
+.swal2-popup.swal2-icon-warning {
+  border-left: 4px solid #b8860b !important;
+}
+
+.swal2-icon.swal2-warning {
+  border-color: #b8860b !important;
+  color: #b8860b !important;
+}
+
+/* Info styling */
+.swal2-popup.swal2-icon-info {
+  border-left: 4px solid #4ecdc4 !important;
+}
+
+.swal2-icon.swal2-info {
+  border-color: #4ecdc4 !important;
+  color: #4ecdc4 !important;
+}
+
+/* Question styling */
+.swal2-popup.swal2-icon-question {
+  border-left: 4px solid #6c757d !important;
+}
+
+.swal2-icon.swal2-question {
+  border-color: #6c757d !important;
+  color: #6c757d !important;
+}
+
+/* Buttons styling */
+.swal2-actions {
+  margin-top: 1.5rem !important;
+  gap: 0.75rem !important;
+}
+
+.swal2-confirm {
+  background: linear-gradient(45deg, #ffa726, #ff9800) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 10px 20px !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  box-shadow: 0 4px 12px rgba(255, 167, 38, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.swal2-confirm:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(255, 167, 38, 0.4) !important;
+  background: linear-gradient(45deg, #ff9800, #ffa726) !important;
+}
+
+.swal2-cancel {
+  background: linear-gradient(45deg, #6c757d, #5a6268) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  padding: 10px 20px !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.swal2-cancel:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(108, 117, 125, 0.4) !important;
+  background: linear-gradient(45deg, #5a6268, #6c757d) !important;
+}
+
+/* Close button */
+.swal2-close {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 2rem !important;
+  transition: color 0.3s ease !important;
+}
+
+.swal2-close:hover {
+  color: #ffa726 !important;
+}
+
+/* Loading styling */
+.swal2-loading .swal2-popup {
+  border-left: 4px solid #4ecdc4 !important;
+}
+
+/* Toast styling */
+.swal2-toast {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 100%) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+  color: #fff !important;
+}
+
+.swal2-toast .swal2-title {
+  color: #ffa726 !important;
+  font-size: 0.9rem !important;
+}
+
+/* Timer progress bar */
+.swal2-timer-progress-bar {
+  background: rgba(255, 167, 38, 0.8) !important;
+}
+
+/* Backdrop/overlay */
+.swal2-backdrop-show {
+  background: rgba(15, 15, 35, 0.8) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* Toast specific - transparent backdrop */
+.swal2-container.swal2-top-end.swal2-backdrop-show {
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+/* Input styling */
+.swal2-input, .swal2-textarea {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  padding: 12px 16px !important;
+  font-family: inherit !important;
+}
+
+.swal2-input:focus, .swal2-textarea:focus {
+  border-color: #ffa726 !important;
+  box-shadow: 0 0 0 3px rgba(255, 167, 38, 0.2) !important;
+  outline: none !important;
+}
+
+.swal2-input::placeholder, .swal2-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Validation message */
+.swal2-validation-message {
+  background: rgba(166, 77, 77, 0.2) !important;
+  border: 1px solid #a64d4d !important;
+  color: #a64d4d !important;
+  border-radius: 6px !important;
+}
+
+/* Footer */
+.swal2-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.8rem !important;
+  margin-top: 1rem !important;
+  padding-top: 1rem !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .swal2-popup {
+    margin: 1rem !important;
+    max-width: calc(100% - 2rem) !important;
+  }
+  
+  .swal2-title {
+    font-size: 1.2rem !important;
+  }
+  
+  .swal2-html-container {
+    font-size: 0.9rem !important;
+  }
+}

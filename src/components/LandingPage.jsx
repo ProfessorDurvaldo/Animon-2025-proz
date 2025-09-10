@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { showError } from '../utils/sweetAlert';
 import './LandingPage.css';
 import logoProz from '../assets/logo_proz.png';
 
 const LandingPage = () => {
-  const { signInWithGoogle, currentUser } = useAuth();
+  const { signInWithGoogle, currentUser, logout } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     document.title = 'ANIMON 2025 - Sorteio de Ingressos Gratuitos | Proz';
-  }, []);
+    
+    // Se o usuário estiver logado ao acessar a página inicial, fazer logout
+    if (currentUser) {
+      logout();
+    }
+  }, [currentUser, logout]);
 
   const handleLogin = async () => {
     try {
@@ -20,16 +26,15 @@ const LandingPage = () => {
       navigate('/dashboard');
     } catch (error) {
       console.error('Erro no login:', error);
-      alert('Erro ao fazer login. Tente novamente.');
+      showError(
+        'Erro no login',
+        'Não foi possível fazer login. Tente novamente.'
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  if (currentUser) {
-    navigate('/dashboard');
-    return null;
-  }
 
   return (
     <div className="landing-page">
