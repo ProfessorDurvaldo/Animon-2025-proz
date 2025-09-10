@@ -72,13 +72,7 @@ const Dashboard = () => {
   };
 
   const loadReferrals = async () => {
-    if (!currentUser) {
-      console.log('❌ Dashboard: currentUser não existe');
-      return;
-    }
-    
-    console.log('🔍 Dashboard: Carregando indicações para userId:', currentUser.uid);
-    console.log('🔍 Dashboard: Email do usuário:', currentUser.email);
+    if (!currentUser) return;
     
     try {
       // Primeira tentativa: buscar por userId
@@ -94,11 +88,8 @@ const Dashboard = () => {
         ...doc.data()
       }));
       
-      console.log('📊 Dashboard: Indicações encontradas por userId:', referralsList.length);
-      
       // Se não encontrou por userId, tentar por userEmail (fallback para dados antigos)
       if (referralsList.length === 0) {
-        console.log('🔄 Dashboard: Tentando buscar por userEmail...');
         const emailQuery = query(
           collection(db, 'referrals'),
           where('userEmail', '==', currentUser.email),
@@ -110,18 +101,11 @@ const Dashboard = () => {
           id: doc.id,
           ...doc.data()
         }));
-        
-        console.log('📊 Dashboard: Indicações encontradas por email:', referralsList.length);
-      }
-      
-      if (referralsList.length > 0) {
-        console.log('✅ Dashboard: Primeira indicação:', referralsList[0]);
       }
       
       setReferrals(referralsList);
     } catch (error) {
-      console.error('❌ Dashboard: Erro ao carregar indicações:', error);
-      console.error('❌ Dashboard: Detalhes do erro:', error.message);
+      console.error('Erro ao carregar indicações:', error);
     } finally {
       setLoadingReferrals(false);
     }

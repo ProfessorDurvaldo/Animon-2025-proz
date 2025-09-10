@@ -16,4 +16,15 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
 
+// Configurações para resolver problemas de CORS/COOP
+googleProvider.setCustomParameters({
+  prompt: 'select_account'
+});
+
+// Configurar auth para desenvolvimento
+if (typeof window !== 'undefined') {
+  // Configurações para resolver Cross-Origin-Opener-Policy
+  auth.settings.appVerificationDisabledForTesting = false;
+}
+
 export default app;
