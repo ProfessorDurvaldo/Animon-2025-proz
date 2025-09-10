@@ -359,6 +359,7 @@ const AdminPanel = () => {
                   <div>Indicado por</div>
                   <div>Nome do Amigo</div>
                   <div>Telefone</div>
+                  <div>WhatsApp</div>
                   <div>Data</div>
                   <div>Status</div>
                   <div>Ações</div>
@@ -371,14 +372,18 @@ const AdminPanel = () => {
                       <small>{referral.userEmail}</small>
                     </div>
                     <div>{referral.friendName}</div>
-                    <div className="phone-cell">
-                      {referral.friendPhone}
+                    <div className="phone-cell">{referral.friendPhone}</div>
+                    <div className="whatsapp-cell">
                       <button
                         onClick={() => openWhatsApp(referral.friendPhone)}
                         className="whatsapp-btn"
                         title="Abrir no WhatsApp"
                       >
-                        📱
+                        <img 
+                          src="/src/assets/WhatsApp.svg.webp" 
+                          alt="WhatsApp" 
+                          className="whatsapp-icon"
+                        />
                       </button>
                     </div>
                     <div className="date-cell">

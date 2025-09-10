@@ -357,7 +357,7 @@
 
 .table-header {
   display: grid;
-  grid-template-columns: 200px 150px 130px 100px 100px 120px;
+  grid-template-columns: 200px 150px 130px 100px 100px 120px 120px;
   gap: 1rem;
   padding: 1rem;
   background: rgba(0, 0, 0, 0.3);
@@ -368,7 +368,7 @@
 
 .table-row {
   display: grid;
-  grid-template-columns: 200px 150px 130px 100px 100px 120px;
+  grid-template-columns: 200px 150px 130px 100px 100px 120px 120px;
   gap: 1rem;
   padding: 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -407,6 +407,39 @@
 .date-cell {
   color: #bbb;
   font-size: 0.85rem;
+}
+
+.whatsapp-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.whatsapp-btn {
+  background: linear-gradient(45deg, #25d366, #128c7e);
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.5);
+  background: linear-gradient(45deg, #128c7e, #25d366);
+}
+
+.whatsapp-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
 }
 
 .status-badge {
@@ -603,6 +636,16 @@
   .table-header, .table-row {
     grid-template-columns: 1fr;
     gap: 0.5rem;
+  }
+
+  .whatsapp-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .whatsapp-icon {
+    width: 16px;
+    height: 16px;
   }
 
   .table-header > div, .table-row > div {
