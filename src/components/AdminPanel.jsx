@@ -23,6 +23,10 @@ const AdminPanel = () => {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState({});
 
+  useEffect(() => {
+    document.title = 'Painel Administrativo - ANIMON 2025 | Proz';
+  }, []);
+
   const loadData = async () => {
     try {
       setLoading(true);

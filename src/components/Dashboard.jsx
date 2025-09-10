@@ -22,6 +22,10 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [loadingReferrals, setLoadingReferrals] = useState(true);
 
+  useEffect(() => {
+    document.title = 'Dashboard - Sorteio ANIMON 2025 | Proz';
+  }, []);
+
   const loadReferrals = async () => {
     if (!currentUser) return;
     

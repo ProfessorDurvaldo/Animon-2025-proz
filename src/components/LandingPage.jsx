@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
@@ -8,6 +8,10 @@ const LandingPage = () => {
   const { signInWithGoogle, currentUser } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    document.title = 'ANIMON 2025 - Sorteio de Ingressos Gratuitos | Proz';
+  }, []);
 
   const handleLogin = async () => {
     try {
