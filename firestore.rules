@@ -1,0 +1,81 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Função para verificar se o usuário é administrador
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == 'durvaldomarques@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+    
+    // Função para verificar se o usuário está logado
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Função para verificar se é o próprio usuário
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Coleção de usuários
+    match /users/{userId} {
+      // Usuários podem ler e escrever apenas seus próprios dados
+      // Admins podem ler todos os dados
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId);
+    }
+    
+    // Coleção de indicações (referrals)
+    match /referrals/{referralId} {
+      // Usuários podem ler suas próprias indicações
+      // Usuários podem criar indicações para si mesmos
+      // Admins podem ler todas as indicações e modificar status
+      allow read: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+      
+      allow create: if isAuthenticated() && 
+        request.auth.uid == request.resource.data.userId &&
+        request.resource.data.userEmail == request.auth.token.email;
+      
+      // Apenas admins podem atualizar indicações (para marcar como inválidas)
+      allow update: if isAdmin();
+      
+      // Ninguém pode deletar indicações
+      allow delete: if false;
+    }
+    
+    // Coleção de administradores
+    match /admins/{adminId} {
+      // Apenas admins podem ler a lista de admins
+      allow read: if isAdmin();
+      
+      // Apenas o admin principal pode criar novos admins
+      allow create: if request.auth != null && 
+        request.auth.token.email == 'durvaldomarques@gmail.com';
+      
+      // Apenas o admin principal pode remover admins
+      allow delete: if request.auth != null && 
+        request.auth.token.email == 'durvaldomarques@gmail.com';
+      
+      // Ninguém pode atualizar admins
+      allow update: if false;
+    }
+    
+    // Coleção de sorteios
+    match /draws/{drawId} {
+      // Apenas admins podem ler os sorteios
+      allow read: if isAdmin();
+      
+      // Apenas admins podem criar sorteios
+      allow create: if isAdmin();
+      
+      // Ninguém pode atualizar ou deletar sorteios
+      allow update, delete: if false;
+    }
+  }
+}

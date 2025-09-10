@@ -1,0 +1,497 @@
+.dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a3a 50%, #0f0f23 100%);
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+}
+
+.dashboard {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.dashboard-header {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
+  border-bottom: 3px solid rgba(255, 170, 38, 0.4);
+  padding: 1.5rem 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.header-info {
+  flex: 1;
+}
+
+.dashboard-header h1 {
+  font-family: 'Orbitron', monospace;
+  color: #ffa726;
+  font-size: 1.6rem;
+  margin: 0 0 0.3rem 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.event-info {
+  color: #4ecdc4;
+  font-size: 0.9rem;
+  margin: 0;
+  font-weight: 500;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.welcome-text {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.user-email {
+  color: #4ecdc4;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.8rem;
+}
+
+.user-teacher {
+  color: #bbb;
+  font-size: 0.8rem;
+}
+
+.header-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.admin-btn {
+  background: linear-gradient(45deg, #ffa726, #ff9800);
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(255, 170, 38, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.admin-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 170, 38, 0.5);
+  background: linear-gradient(45deg, #ff9800, #ffa726);
+}
+
+.logout-btn {
+  background: linear-gradient(45deg, #ff6b6b, #ff5252);
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.logout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.5);
+  background: linear-gradient(45deg, #ff5252, #ff6b6b);
+}
+
+.dashboard-main {
+  padding: 2rem 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-number {
+  font-family: 'Orbitron', monospace;
+  font-size: 3rem;
+  font-weight: 900;
+  color: #4ecdc4;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.3rem;
+}
+
+.stat-sublabel {
+  font-size: 0.9rem;
+  color: #bbb;
+}
+
+.add-referral-section {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.add-referral-section h2 {
+  font-family: 'Orbitron', monospace;
+  color: #ffa726;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.referral-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 1rem;
+  align-items: end;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #4ecdc4;
+  box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+}
+
+.form-input::placeholder {
+  color: #bbb;
+}
+
+.add-btn {
+  background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+}
+
+.add-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.referrals-section {
+  margin-bottom: 3rem;
+}
+
+.referrals-section h2 {
+  font-family: 'Orbitron', monospace;
+  color: #ffa726;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #bbb;
+}
+
+.no-referrals {
+  text-align: center;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.no-referrals p {
+  margin: 0.5rem 0;
+  color: #bbb;
+}
+
+.referrals-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.referrals-group {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.group-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+}
+
+.group-title.valid {
+  color: #4caf50;
+}
+
+.group-title.invalid {
+  color: #f44336;
+}
+
+.referrals-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.referral-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 1.5rem;
+  border-left: 4px solid;
+  transition: transform 0.3s ease;
+}
+
+.referral-card:hover {
+  transform: translateX(5px);
+}
+
+.referral-card.valid {
+  border-left-color: #4caf50;
+}
+
+.referral-card.invalid {
+  border-left-color: #f44336;
+}
+
+.referral-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.referral-info p {
+  margin: 0 0 0.5rem 0;
+  color: #4ecdc4;
+  font-family: 'Orbitron', monospace;
+  font-weight: 500;
+}
+
+.referral-info small {
+  color: #bbb;
+  font-size: 0.85rem;
+}
+
+.referral-status {
+  margin-top: 1rem;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-badge.valid {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+  border: 1px solid #4caf50;
+}
+
+.status-badge.invalid {
+  background: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+  border: 1px solid #f44336;
+}
+
+.tips-section {
+  background: rgba(255, 170, 38, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 170, 38, 0.3);
+}
+
+.tips-section h3 {
+  font-family: 'Orbitron', monospace;
+  color: #ffa726;
+  margin-bottom: 1rem;
+}
+
+.tips-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tips-section li {
+  margin: 0.8rem 0;
+  padding-left: 2rem;
+  position: relative;
+  color: #ddd;
+}
+
+.tips-section li::before {
+  content: '💡';
+  position: absolute;
+  left: 0;
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 1.5rem 0;
+    position: relative;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .header-info {
+    text-align: center;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .event-info {
+    font-size: 0.9rem;
+  }
+
+  .user-section {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .user-details {
+    align-items: center;
+    text-align: center;
+  }
+
+  .header-actions {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .referral-form {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .referrals-list {
+    grid-template-columns: 1fr;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header h1 {
+    font-size: 1.4rem;
+    line-height: 1.2;
+  }
+
+  .event-info {
+    font-size: 0.85rem;
+  }
+
+  .welcome-text {
+    font-size: 1rem;
+  }
+
+  .user-email {
+    font-size: 0.8rem;
+  }
+
+  .user-teacher {
+    font-size: 0.8rem;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .admin-btn, .logout-btn {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+}
