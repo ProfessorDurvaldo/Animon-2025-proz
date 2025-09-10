@@ -63,7 +63,7 @@ const Dashboard = () => {
         // Mostrar alerta de vitória
         showSuccess(
           '🎉 PARABÉNS! VOCÊ GANHOU!',
-          `Você foi sorteado na posição #${winInfo.position}!\n\nVenha até a escola Proz para retirar seu ingresso gratuito para o ANIMON 2025!\n\n📍 Compareça o quanto antes com um documento de identidade.`
+          `Você foi sorteado na posição #${winInfo.position}!\n\nVenha até a escola Proz para retirar seu passaporte gratuito para o ANIMON 2025!\n\n🎫 Válido para os 2 dias do evento\n📍 Compareça o quanto antes com um documento de identidade.`
         );
       }
     } catch (error) {
@@ -293,6 +293,11 @@ const Dashboard = () => {
 
       <main className="dashboard-main">
         <div className="container">
+          <div className="raffle-date-banner">
+            <h2>🎲 SORTEIO SERÁ REALIZADO NO DIA 12/09/2025! 🎲</h2>
+            <p>Prepare-se! Os ganhadores dos 16 passaportes gratuitos (válidos para os 2 dias) para o ANIMON 2025 serão anunciados em breve!</p>
+          </div>
+
           <div className="stats-grid">
             <div className="stat-card">
               <div className="stat-number">{validReferrals.length}</div>

@@ -11,7 +11,7 @@ const LandingPage = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    document.title = 'ANIMON 2025 - Sorteio de Ingressos Gratuitos | Proz';
+    document.title = 'ANIMON 2025 - Sorteio de Passaportes Gratuitos | Proz';
     
     // Se o usuário estiver logado ao acessar a página inicial, fazer logout
     if (currentUser) {
@@ -58,11 +58,11 @@ const LandingPage = () => {
             🎌 SORTEIO ÉPICO ANIMON 2025! 🎌
           </h1>
           <p className="hero-subtitle">
-            Quer curtir o MAIOR evento de anime de Montes Claros com ingressos DE GRAÇA?
+            Quer curtir o MAIOR evento de anime de Montes Claros com passaportes DE GRAÇA?
           </p>
           <div className="prize-highlight">
             <span className="prize-number">16</span>
-            <span className="prize-text">INGRESSOS GRATUITOS</span>
+            <span className="prize-text">PASSAPORTES GRATUITOS</span>
           </div>
         </div>
       </header>
@@ -146,7 +146,7 @@ const LandingPage = () => {
           </div>
 
           <div className="event-cta">
-            <h3>💰 INGRESSOS A PARTIR DE R$ 20</h3>
+            <h3>💰 PASSAPORTES A PARTIR DE R$ 20</h3>
             <p>Apoio oficial da Prefeitura de Montes Claros</p>
             <p>Produção profissional da NEXA Productions</p>
           </div>
@@ -161,7 +161,7 @@ const LandingPage = () => {
             <li>É necessário completar o perfil com telefone válido</li>
             <li>Cada amigo indicado = 1 chance no sorteio</li>
             <li>Os números serão conferidos e validados</li>
-            <li>16 ganhadores serão sorteados</li>
+            <li>16 passaportes serão sorteados (válidos para os 2 dias)</li>
             <li>Números inválidos não contam para o sorteio</li>
           </ul>
         </div>

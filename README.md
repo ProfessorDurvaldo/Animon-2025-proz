@@ -1,6 +1,6 @@
 # 🎌 Sorteio ANIMON 2025 - Proz
 
-Sistema web para sorteio de ingressos gratuitos para o evento ANIMON 2025, onde alunos da Proz podem indicar amigos para aumentar suas chances de ganhar.
+Sistema web para sorteio de passaportes gratuitos para o evento ANIMON 2025, onde alunos da Proz podem indicar amigos para aumentar suas chances de ganhar.
 
 ## ✨ Funcionalidades
 
@@ -80,7 +80,7 @@ firebase deploy
 
 1. **Pool de Bilhetes**: Cada indicação válida = 1 bilhete no sorteio
 2. **Usuários Únicos**: O sistema prioriza usuários únicos (máximo 1 prêmio por pessoa)
-3. **16 Ganhadores**: São sorteados 16 ganhadores aleatoriamente
+3. **16 Passaportes**: São sorteados 16 passaportes (válidos para os 2 dias) aleatoriamente
 4. **Histórico**: Todos os sorteios ficam salvos no banco de dados
 
 ## 📱 Responsividade

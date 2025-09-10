@@ -14,6 +14,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { showError, showToast, showWarning, showInfo, showConfirm } from '../utils/sweetAlert';
 import AdminDraw from './AdminDraw';
 import './AdminPanel.css';
+import whatsappIcon from '../assets/WhatsApp.svg.webp';
 
 const AdminPanel = () => {
   const { logout, currentUser } = useAuth();
@@ -380,7 +381,7 @@ const AdminPanel = () => {
                         title="Abrir no WhatsApp"
                       >
                         <img 
-                          src="/src/assets/WhatsApp.svg.webp" 
+                          src={whatsappIcon} 
                           alt="WhatsApp" 
                           className="whatsapp-icon"
                         />

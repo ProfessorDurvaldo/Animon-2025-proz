@@ -117,11 +117,11 @@ const AdminDraw = ({ users, referrals, onRefresh }) => {
         }
       }
       
-      // Garantir que cada usuário só pode ganhar um ingresso (sem repetições)
+      // Garantir que cada usuário só pode ganhar um passaporte (sem repetições)
       if (winners.length < 16) {
         showWarning(
           'Usuários insuficientes!',
-          `Apenas ${winners.length} usuários únicos disponíveis. Não é possível sortear 16 ingressos sem repetir ganhadores.`
+          `Apenas ${winners.length} usuários únicos disponíveis. Não é possível sortear 16 passaportes sem repetir ganhadores.`
         );
         return;
       }
@@ -177,7 +177,7 @@ const AdminDraw = ({ users, referrals, onRefresh }) => {
     <div className="admin-draw">
       <div className="draw-header">
         <h2>🎲 Sistema de Sorteio ANIMON 2025</h2>
-        <p>Sorteie 16 ganhadores baseado nas indicações válidas</p>
+        <p>Sorteie 16 passaportes (válidos para os 2 dias) baseado nas indicações válidas</p>
       </div>
 
       <div className="draw-stats">
@@ -198,8 +198,8 @@ const AdminDraw = ({ users, referrals, onRefresh }) => {
         </div>
         <div className="stat-card">
           <div className="stat-number">16</div>
-          <div className="stat-label">Ganhadores</div>
-          <div className="stat-sublabel">Serão sorteados</div>
+          <div className="stat-label">Passaportes</div>
+          <div className="stat-sublabel">Válidos 2 dias</div>
         </div>
       </div>
 
@@ -214,7 +214,7 @@ const AdminDraw = ({ users, referrals, onRefresh }) => {
         
         {stats.totalTickets < 16 && (
           <p className="warning">
-            ⚠️ Necessário pelo menos 16 indicações válidas para realizar o sorteio
+            ⚠️ Necessário pelo menos 16 indicações válidas para sortear os passaportes
           </p>
         )}
       </div>

@@ -175,6 +175,11 @@ const ProfileCompletion = () => {
                 </select>
               </div>
 
+              <div className="course-promotion-notice">
+                <h3>🎯 Promoção Exclusiva!</h3>
+                <p>Esta promoção é válida apenas para alunos do curso de <strong>Desenvolvimento de Sistemas</strong>.</p>
+              </div>
+
               <div className="form-group">
                 <label htmlFor="curso">Curso *</label>
                 <select
@@ -184,14 +189,8 @@ const ProfileCompletion = () => {
                   required
                   className="form-input"
                 >
-                  <option value="">Selecione seu curso</option>
-                  <option value="Enfermagem">Enfermagem</option>
-                  <option value="Administração">Administração</option>
-                  <option value="RH">RH</option>
-                  <option value="Desenvolvimento de sistema">Desenvolvimento de sistema</option>
-                  <option value="Estética">Estética</option>
-                  <option value="Radiologia">Radiologia</option>
-                  <option value="Segurança no trabalho">Segurança no trabalho</option>
+                  <option value="">Confirme seu curso</option>
+                  <option value="Desenvolvimento de Sistemas">Desenvolvimento de Sistemas</option>
                 </select>
               </div>
 
